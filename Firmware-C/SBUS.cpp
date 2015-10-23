@@ -1,6 +1,6 @@
 #include <propeller.h>
-#include "constants.h"
-#include "sbus.h"
+#include "Constants.h"
+#include "SBUS.h"
 
 static int Cog;
 
@@ -16,7 +16,7 @@ void SBUS::Start( int InputPin , short Center )
 {
   data.CenterOffset = Center;
   data.InputMask = 1 << InputPin;
-  data.BaudDelay = Const_ClockFreq / 100000;                        //SBUS is 100,000 bps 
+  data.BaudDelay = Const_ClockFreq / 100000;                        //SBUS is 100,000 bps
 
   use_cog_driver(SBUS_driver);
   Cog = load_cog_driver(SBUS_driver, &data) + 1;

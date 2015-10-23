@@ -1,25 +1,25 @@
 
 #include <propeller.h>
-#include "constants.h"
-#include "settings.h"
-#include "sensors.h"
+#include "Constants.h"
+#include "Settings.h"
+#include "Sensors.h"
 
 /*
-  HUNDRED_nS  = _clkfreq / 10_000_000  'Number of clock cycles per 100 nanoseconds (8 @ 80MHz)                        
+  HUNDRED_nS  = _clkfreq / 10_000_000  'Number of clock cycles per 100 nanoseconds (8 @ 80MHz)
   ONE_uS      = HUNDRED_nS * 10 'Number of clock cycles per 1 microsecond (1000 nanoseconds)
 
 'WS2812B Timings
-  LED_0_HI    = (ONE_uS * 35)/100       
-  LED_0_LO    = (ONE_uS * 90)/100       
-  LED_1_HI    = (ONE_uS * 90)/100       
-  LED_1_LO    = (ONE_uS * 35)/100       
+  LED_0_HI    = (ONE_uS * 35)/100
+  LED_0_LO    = (ONE_uS * 90)/100
+  LED_1_HI    = (ONE_uS * 90)/100
+  LED_1_LO    = (ONE_uS * 35)/100
 
 
 'WS2812 Timings
-'  LED_0_HI    = (ONE_uS * 35)/100       
-'  LED_0_LO    = (ONE_uS * 80)/100       
-'  LED_1_HI    = (ONE_uS * 70)/100       
-'  LED_1_LO    = (ONE_uS * 60)/100       
+'  LED_0_HI    = (ONE_uS * 35)/100
+'  LED_0_LO    = (ONE_uS * 80)/100
+'  LED_1_HI    = (ONE_uS * 70)/100
+'  LED_1_LO    = (ONE_uS * 60)/100
 */
 
 
@@ -42,11 +42,11 @@ const int Timer = 14;
 static struct DATA {
   int  ins[Sensors_ParamsSize];         //Temp, GX, GY, GZ, AX, AY, AZ, MX, MY, MZ, Alt, AltRate, AltTemp, Pressure, Timer
   int  DriftScale[3];
-  int  DriftOffset[3];          //These values will be altered in the EEPROM by the Config Tool and Propeller Eeprom code                       
+  int  DriftOffset[3];          //These values will be altered in the EEPROM by the Config Tool and Propeller Eeprom code
   int  AccelOffset[3];
   int  MagOffsetX, MagScaleX, MagOffsetY, MagScaleY, MagOffsetZ, MagScaleZ;
 } data;
- 
+
 static int cog;
 extern long AltTable_000[];
 
@@ -68,7 +68,7 @@ void Sensors_Start( int ipin, int opin, int cpin, int sgpin, int smpin, int apin
 //   apin    = pin connected to CS on altimeter
 //   LEDPin  = pin connected to WS2812B LED array
 //   LEDAddr = HUB address of RGB values for LED array (updated constantly)
-//   LEDCount= Number of LED values to update  
+//   LEDCount= Number of LED values to update
 
 	Sensors_Stop();
 
@@ -81,7 +81,7 @@ void Sensors_Start( int ipin, int opin, int cpin, int sgpin, int smpin, int apin
 	data.ins[6] = _LEDPin;
 	data.ins[7] = _LEDAddr;
 	data.ins[8] = _LEDCount;
-	data.ins[9] = (long)&AltTable_000[0];       //Append the HUB address of the pressure to altitude table 
+	data.ins[9] = (long)&AltTable_000[0];       //Append the HUB address of the pressure to altitude table
 
 
 	data.DriftScale[0] = data.DriftScale[1] = data.DriftScale[2] = 0;
@@ -175,10 +175,10 @@ void Sensors_SetMagnetometerScaleOffsets( int * MagOffsetsAndScalesAddr )
         //is a suitable alternative.  I use linear interpolation, but the table has enough points to give an
         //absolute accuracy of +/- 6 inches, with an average accuracy of +/- 1 inch.
 
-        //Table entries are altitude in mm, table index is (hPa - 260)/4, table range is 260 to 1260 hPa   
+        //Table entries are altitude in mm, table index is (hPa - 260)/4, table range is 260 to 1260 hPa
 
 long AltTable_000[] = {
-    10108515, 
+    10108515,
     10008960,
     9910619,
     9813460,
@@ -429,4 +429,4 @@ long AltTable_000[] = {
     -1820973,
     -1848991,
     -1876937,
-    -1876937 };       //Last entry is duplicated so we don't have to check / clamp in the code 
+    -1876937 };       //Last entry is duplicated so we don't have to check / clamp in the code

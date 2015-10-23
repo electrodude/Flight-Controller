@@ -3,14 +3,14 @@
 //
 
 #include <string.h>
-#include "eeprom.h"
-#include "settings.h"
+#include "Eeprom.h"
+#include "Settings.h"
 
 
 /*
 PUB Main | testCheck
   ''This function exists only to test and validate the Load / Save / Checksum code
-   
+
   {
   Dbg.Start( 31, 30, 0, 115200 )
   Dbg.rx
@@ -25,7 +25,7 @@ PUB Main | testCheck
   dbg.tx(13)
 
 
-  SetDefaults   
+  SetDefaults
   testCheck := CalculateChecksum
   dbg.hex( testCheck, 8 )
   dbg.tx(13)
@@ -69,12 +69,12 @@ void Settings_Save(void)
 void Settings_SetDefaults(void)
 {
   memset( &Prefs, 0, sizeof(Prefs) );
-  Prefs.SBUSCenter = 1000; 
+  Prefs.SBUSCenter = 1000;
   Prefs.RollCorrect[0] = 0.0f;                         //Sin of roll correction angle
   Prefs.RollCorrect[1] = 1.0f;                         //Cos of roll correction angle
 
-  Prefs.PitchCorrect[0] = 0.0f;                        //Sin of pitch correction angle 
-  Prefs.PitchCorrect[1] = 1.0f;                        //Cos of pitch correction angle 
+  Prefs.PitchCorrect[0] = 0.0f;                        //Sin of pitch correction angle
+  Prefs.PitchCorrect[1] = 1.0f;                        //Cos of pitch correction angle
 }
 
 
@@ -86,12 +86,12 @@ long Settings_GetValue( int index )
 void Settings_SetValue( int index , int val )
 {
   ((int*)&Prefs)[index] = val;
-}  
+}
 
 void Settings_SetValue( int index , float val )
 {
   ((float*)&Prefs)[index] = val;
-}  
+}
 
 int * Settings_GetAddress( int index )
 {
@@ -106,6 +106,6 @@ int Settings_CalculateChecksum(void)
   {
     r = (r << 7) | (r >> (32-7));
     r = r ^ ((unsigned int*)&Prefs)[i];     //Jumble the bits, XOR in the prefs value
-  }    
+  }
   return (int)r;
-}  
+}

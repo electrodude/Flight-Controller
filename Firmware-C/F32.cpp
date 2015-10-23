@@ -3,7 +3,7 @@
 #include <cog.h>
 #include <sys/driver.h>
 #include <propeller.h>
-#include "f32.h"
+#include "F32.h"
 
 
 
@@ -70,7 +70,7 @@ void F32::AddCommand( int index, int fp_op, void* a_addr, void* b_addr, void* ou
 void F32::EndStream( int index )
 {
   int *addr = CommandAddr[index];
-  addr[0] = 0;					         //Use zero to indicate end-of-stream 
+  addr[0] = 0;					         //Use zero to indicate end-of-stream
   CommandAddr[index]++;
 
   //return CommandAddr[index];      //Allows the caller to figure out how much space this actually took
@@ -81,7 +81,7 @@ int* F32::GetCommandPtr( int fp_op )
 {
   return cmdCallTableAddr + fp_op;
 }
-      
+
 
 void F32::RunStream( int * a )
 {
@@ -128,7 +128,7 @@ PUB FAdd(a, b)
   f32_Cmd := @result
   repeat
   while f32_Cmd
-          
+
 PUB FSub(a, b)
 /*
   Subtraction: result = a - b
@@ -141,7 +141,7 @@ PUB FSub(a, b)
   f32_Cmd := @result
   repeat
   while f32_Cmd
-  
+
 PUB FMul(a, b)
 /*
   Multiplication: result = a * b
@@ -405,7 +405,7 @@ PUB Pow(a, b)
   Power (a to the power b).
   Parameters:
     a        32-bit floating point value
-    b        32-bit floating point value  
+    b        32-bit floating point value
   Returns:   32-bit floating point value
 */
   result  := cmdFPow
@@ -445,7 +445,7 @@ PUB FAbs(a)
   Returns:   32-bit floating point value
 */
   return a & $7FFF_FFFF
-  
+
 PUB Radians(a) | b
 /*
   Convert degrees to radians
@@ -479,7 +479,7 @@ PUB FMin(a, b)
   Minimum: result = the minimum value a or b.
   Parameters:
     a        32-bit floating point value
-    b        32-bit floating point value  
+    b        32-bit floating point value
   Returns:   32-bit floating point value
 */
   result  := cmdFCmp
@@ -489,13 +489,13 @@ PUB FMin(a, b)
   if result < 0
     return a
   return b
-  
+
 PUB FMax(a, b)
 /*
   Maximum: result = the maximum value a or b.
   Parameters:
     a        32-bit floating point value
-    b        32-bit floating point value  
+    b        32-bit floating point value
   Returns:   32-bit floating point value
 */
   result  := cmdFCmp
@@ -512,7 +512,7 @@ PUB FMod(a, b)
   Floating point remainder: result = the remainder of a / b.
   Parameters:
     a        32-bit floating point value
-    b        32-bit floating point value  
+    b        32-bit floating point value
   Returns:   32-bit floating point value
 */
   result  := cmdFMod

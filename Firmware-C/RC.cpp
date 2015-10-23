@@ -3,7 +3,7 @@
 #include <cog.h>
 #include <sys/driver.h>
 #include <propeller.h>
-#include "rc.h"
+#include "RC.h"
 
 static const int Scale = 80/2; // System clock frequency in Mhz, halved - we're converting outputs to 1/2 microsecond resolution
 
@@ -28,7 +28,7 @@ int RC::Get( int _pin ) {
 }
 
 int RC::GetRC(int _pin) {
-	// Get receiver servo pulse width as normal r/c values (+/-1000) 
+	// Get receiver servo pulse width as normal r/c values (+/-1000)
 	return data.Pins[_pin] / Scale - 3000; // Get pulse width from Pins[..], convert to uSec, make 0 center
 }
 

@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <cog.h>
 #include <propeller.h>
-#include "constants.h"
-#include "Servo32_Highres.h"
+#include "Constants.h"
+#include "Servo32_HighRes.h"
 
 
 struct ServoData {
@@ -36,15 +36,15 @@ void Servo32_Init( int fastRate )
 }
 
 
-//Set a PIN index as a high-speed output (250Hz)  
+//Set a PIN index as a high-speed output (250Hz)
 void Servo32_AddFastPin( int Pin )
 {
-	Data.FastPins |= (1<<Pin);                                            
-	Data.SlowPins |= (1<<Pin);	//Fast pins are also updated during the "slow" cycle                                              
+	Data.FastPins |= (1<<Pin);
+	Data.SlowPins |= (1<<Pin);	//Fast pins are also updated during the "slow" cycle
 }
 
 
-//Set a PIN index as a standard-speed output (50Hz)  
+//Set a PIN index as a standard-speed output (50Hz)
 void Servo32_AddSlowPin( int Pin )
 {
 	Data.SlowPins |= (1<<Pin);	//Slow pins are ONLY updated during the "slow" cycle

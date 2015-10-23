@@ -1,7 +1,7 @@
 
 #include <propeller.h>
 #include <simpletools.h>
-#include "eeprom.h"
+#include "Eeprom.h"
 
 /*
 File: Propeller Eeprom.spin
@@ -16,7 +16,7 @@ pane.  Double-click it to open.
 Note: Greg Glenn -  Added i2cRelease EEPROM::function to fully release bus so other
                     devices can use it (gyro).  Changed all calls of i2sStop to i2cRelease
 
-  
+
 This object simplifies writing to and reading from the Propeller chip's 24LC256 EEPROM
 program memory.  This object also has methods that can be used to back up sections of
 RAM so that they are automatically reloaded into RAM during reboot.
@@ -27,46 +27,46 @@ EXAMPLES:
 
   OBJ
     eeprom : "Propeller Eeprom"
-   
+
   ...
 
-  VAR 
+  VAR
     long value[31]
     word a, b, c, d
     byte e, f, g, mybytes[20]
-   
+
   ...
 
   PUB
-   
+
     'Copy everything from value[0]..mybytes[20] from RAM to the same addresses in EEPROM.
-    'These values will automatically be loaded back into RAM in the event of a reboot.  
+    'These values will automatically be loaded back into RAM in the event of a reboot.
     EEPROM::VarBackup(&value, &myBytes[20])         //Copy from RAM to EEPROM
-   
+
     ...
-   
+
     'Restore a previous snapshot of variables in main RAM.
     EEPROM::VarRestore(&value, &mybytes[20])
-   
+
     ...
-   
+
     'Copy a snapshot of just the values long array to the same addresses in EEPROM. Since
     'these are long variables, 3 has to be added to address passed to the FromRam method's
-    'endAddr parameter to account for the three bytes that follow the long's address. 
+    'endAddr parameter to account for the three bytes that follow the long's address.
     EEPROM::VarBackup(&value, &value[31] + 3)
-   
+
     ...
-   
+
     'Copy all the variable contents from the start of the value array through the end of
     'the mybytes array to addresses 20_000..20_158 in EEPROM.
     EEPROM::FromRam(&value, &mybytes[20], 20_000)
-   
+
     ...
-   
+
     'Copy only the longs and words back to RAM variables from EEPROM
     'addresses 20_000..20_135.
     EEPROM::ToRam(&value, &d + 1, 20_000)
-   
+
 NOTES:
 
 (1) The endAddr parameters are byte addresses.  If you use &myLastLongAddress, make sure
@@ -76,10 +76,10 @@ that make up the word.  Byte addresses do not need to be adjusted.
 
 (2) Regardless of the order you declare the variables, the Spin compiler sets aside longs
 first, then words, then bytes. If you are backing up or restoring sections of main RAM
-that span more than one variable type with the VarBackup or VarRestore methods, make sure 
+that span more than one variable type with the VarBackup or VarRestore methods, make sure
 to declare all your variables in this order: long, word, byte.  Multiple method calls can
 also be made to back up specific sections if variables have to be declared in groups
-of different sizes that are not contiguous.  
+of different sizes that are not contiguous.
 
 (3) Programs are stored in EEPROM and RAM, starting at the smallest byte address and
 building toward larger addresses.  So, datalogging programs that use EEPROM for storage
@@ -130,7 +130,7 @@ void EEPROM::FromRam(void * startAddr, void * endAddr, int eeStart)
     page = addr+64 - eeAddr%64;                  //Find next EEPROM page boundary
     if( page > (unsigned char*)endAddr+1) {
       page = (unsigned char *)endAddr+1;
-    }     
+    }
 
     SetAddr(eeAddr);                             //Give EEPROM starting address
     do {                                         //Bytes -> EEPROM until page boundary
@@ -148,11 +148,11 @@ void EEPROM::ToRam(void * startAddr, void * endAddr, int eeStart)
   //Copy from EEPROM beginning at eeStart address to startAddr..endAddr in main RAM.
 
   unsigned char * addr;
-  
-  SetAddr(eeStart);                              //Set EEPROM's address pointer 
+
+  SetAddr(eeStart);                              //Set EEPROM's address pointer
   i2cStart();
   SendByte(0xA1);                                //EEPROM I2C address + read operation
-  
+
   if(startAddr == endAddr) {
     addr = (unsigned char *)startAddr;
   }
@@ -160,11 +160,11 @@ void EEPROM::ToRam(void * startAddr, void * endAddr, int eeStart)
     addr = (unsigned char *)startAddr;
     while( addr != ((unsigned char *)endAddr) )  //Main RAM index startAddr to endAddr
     {
-      *addr++ = GetByte();                       //GetByte byte from EEPROM & copy to RAM 
+      *addr++ = GetByte();                       //GetByte byte from EEPROM & copy to RAM
       SendAck(ACK);                              //Acknowledge byte received
     }
   }
-  *addr = GetByte();                             //GetByte byte from EEPROM & copy to RAM 
+  *addr = GetByte();                             //GetByte byte from EEPROM & copy to RAM
   SendAck(NACK);
   i2cRelease();                                  //Stop sequential read
 }
@@ -263,7 +263,7 @@ void EEPROM::i2cStop(void)
 
 void EEPROM::i2cRelease(void)                    //Necessary to release i2c bus so other devices can use it
 {                                                //SDA goes LOW to HIGH with SCL High
-   
+
    Set(OUTA,SCL);                               //Drive SCL HIGH
    Set(OUTA,SDA);                               // then SDA HIGH
    Clear(DIRA,SCL);                             //Now let them float
@@ -273,7 +273,7 @@ void EEPROM::i2cRelease(void)                    //Necessary to release i2c bus 
 
 unsigned char EEPROM::GetByte(void)
 {
-  //Shift in a byte msb first.  
+  //Shift in a byte msb first.
 
   unsigned char value = 0;                       //Clear value
   Clear(DIRA,SDA);                               //SDA input so 24LC256 can control
