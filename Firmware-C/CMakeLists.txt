@@ -5,17 +5,17 @@ create_executable(Elev8
     Eeprom
     Elev8-Main
     F32
-    F32_driver.dat
+    F32_driver.spin
     IntPID
     QuatIMU
-    pst.dat
+    pst.spin
     RC
-    RC_driver.dat
+    RC_driver.spin
     SBUS
-    SBUS_driver.dat
+    SBUS_driver.spin
     Sensors
-    Sensors_driver.dat
+    Sensors_driver.spin
     Servo32_HighRes
-    Servo32_HighRes_driver.dat
+    Servo32_HighRes_driver.spin
     Settings
     )
