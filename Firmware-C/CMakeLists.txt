@@ -1,21 +1,27 @@
 cmake_minimum_required(VERSION 3.0)
 
 create_executable(Elev8
-    Beep
-    Eeprom
-    Elev8-Main
-    F32
-    F32_driver.spin
-    IntPID
-    QuatIMU
+    battery
+    beep
+    commlink
+    eeprom
+    elev8-main
+    f32
+    f32_driver.spin
+    intpid
+    laserrange
+    prefs
+    quatimu
     pst.spin
-    RC
-    RC_driver.spin
-    SBUS
-    SBUS_driver.spin
-    Sensors
-    Sensors_driver.spin
-    Servo32_HighRes
-    Servo32_HighRes_driver.spin
-    Settings
+    rc
+    rc_driver_ppm.spin
+    rc_driver_v3.spin
+    sbus
+    sbus_driver.spin
+    sensors
+    sensors_driver.spin
+    serial_4x.cpp
+    serial_4x_driver.spin
+    servo32_highres
+    servo32_highres_driver.spin
     )
