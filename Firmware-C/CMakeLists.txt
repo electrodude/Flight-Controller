@@ -16,6 +16,7 @@ create_executable(Elev8
     rc
     rc_driver_ppm.spin
     rc_driver_v3.spin
+    remote_rx_driver.spin
     sbus
     sbus_driver.spin
     sensors
