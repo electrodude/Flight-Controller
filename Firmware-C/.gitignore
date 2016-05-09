@@ -1,1 +1,8 @@
-cmm
+CMakeCache.txt
+CMakeFiles
+CTestTestfile.cmake
+cmake_install.cmake
+
+*.ii
+*.s
+Elev8
